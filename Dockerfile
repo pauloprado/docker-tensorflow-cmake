@@ -2,29 +2,22 @@ FROM ubuntu:16.04
 
 MAINTAINER Paulo Prado <pvsprado@gmail.com>
 
-# Installing Bazel, 3 steps. From Bazel installing documentation
-RUN apt-get update
-RUN apt-get install -y --no-install-recommends software-properties-common 
-
-RUN apt-get install -y -q autoconf automake libtool curl make g++ unzip git\
+# Installing all the tools necessary to build and run tensorflow with cmake
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends software-properties-common \
+	&& apt-get install -y -q autoconf automake libtool curl make g++ unzip git \
 	&& apt-get install -y -q python-numpy swig python-dev python-wheel
 
 
-RUN \
-  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+# Installing Bazel, 3 steps. From Bazel installing documentation
+
+#Step 1: Install JDK 8
+RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
   add-apt-repository -y ppa:webupd8team/java && \
   apt-get update && \
   apt-get install -y oracle-java8-installer && \
   rm -rf /var/lib/apt/lists/* && \
 rm -rf /var/cache/oracle-jdk8-installer
-
-##############3
-#Step 1: Install JDK 8
-#RUN DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:webupd8team/java 
-#RUN apt-get update
-#RUN apt-get install -y -q oracle-java8-installer
-
-RUN apt-get install -y -q curl
 
 #Step 2: Add Bazel distribution URI as a package source
 RUN echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list \
@@ -59,3 +52,5 @@ RUN cp /tensorflow/bazel-bin/tensorflow/libtensorflow_all.so /usr/local/lib \
 	&& cp /tensorflow/bazel-genfiles/tensorflow/cc/ops/*.h  /usr/local/include/google/tensorflow/tensorflow/cc/ops \
 	&& cp -r /tensorflow/third_party /usr/local/include/google/tensorflow/ \
 	&& rm -r /usr/local/include/google/tensorflow/third_party/py 
+
+ADD example /example

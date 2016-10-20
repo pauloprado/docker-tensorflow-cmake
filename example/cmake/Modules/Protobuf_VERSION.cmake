@@ -1,0 +1,5 @@
+set(Protobuf_URL https://github.com/google/protobuf)
+set(Protobuf_HASH SHA256=0a0ae63cbffc274efb573bdde9a253e3f32e458c41261df51c5dbc5ad541e8f7)
+set(Protobuf_DIR protobuf-3.1.0)
+set(Protobuf_COMMIT c2b3e70efd2038a54ef8973771ac58192885125e)
+set(Protobuf_INSTALL_DIR /usr/local)

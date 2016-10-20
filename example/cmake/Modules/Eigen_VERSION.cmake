@@ -1,0 +1,5 @@
+set(Eigen_URL http://bitbucket.org/eigen/eigen/get/c78d757b69d3.tar.gz)
+set(Eigen_ARCHIVE_HASH c78d757b69d3)
+set(Eigen_HASH SHA256=dfb650e20a0dee6172dcc99796210a07e40af61348497503b42dc12935b4e6f5)
+set(Eigen_DIR eigen-eigen-c78d757b69d3)
+set(Eigen_INSTALL_DIR /usr/local)
